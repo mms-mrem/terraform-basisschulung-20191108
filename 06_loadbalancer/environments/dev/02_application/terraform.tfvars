@@ -1,6 +1,6 @@
+project     = "loadbalancer"
 environment = "dev"
-
-region = "eu-central-1"
+region      = "eu-central-1"
 
 /* Ubuntu Trusty 16.04 LTS (x64) */
 image = {

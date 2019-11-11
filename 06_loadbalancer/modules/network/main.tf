@@ -8,7 +8,7 @@ resource "aws_vpc" "environment" {
   enable_dns_hostnames = true
 
   tags = {
-    Name        = "${var.environment}-vpc"
+    Name        = "${var.project}-${var.environment}-vpc"
     Environment = "${lower(var.environment)}"
   }
 }
@@ -17,7 +17,7 @@ resource "aws_internet_gateway" "environment" {
   vpc_id = "${aws_vpc.environment.id}"
 
   tags = {
-    Name        = "${var.environment}-internet-gateway"
+    Name        = "${var.project}-${var.environment}-internet-gateway"
     Environment = "${lower(var.environment)}"
   }
 }
@@ -29,7 +29,7 @@ resource "aws_subnet" "public-subnets" {
   availability_zone = "${element(split(",", lookup(var.azs, var.region)), count.index)}"
 
   tags = {
-    Name        = "${var.environment}-public-subnet-${count.index}"
+    Name        = "${var.project}-${var.environment}-public-subnet-${count.index}"
     Environment = "${lower(var.environment)}"
     Network     = "public"
   }
@@ -44,7 +44,7 @@ resource "aws_subnet" "private-subnets-app" {
   availability_zone = "${element(split(",", lookup(var.azs, var.region)), count.index)}"
 
   tags = {
-    Name        = "${var.environment}-private-subnet-app-${count.index}"
+    Name        = "${var.project}-${var.environment}-private-subnet-app-${count.index}"
     Environment = "${lower(var.environment)}"
     Network     = "private"
     Tier        = "app"
@@ -58,7 +58,7 @@ resource "aws_subnet" "private-subnets-db" {
   availability_zone = "${element(split(",", lookup(var.azs, var.region)), count.index)}"
 
   tags = {
-    Name        = "${var.environment}-private-subnet-db-${count.index}"
+    Name        = "${var.project}-${var.environment}-private-subnet-db-${count.index}"
     Environment = "${lower(var.environment)}"
     Network     = "private"
     Tier        = "db"
@@ -75,7 +75,7 @@ resource "aws_route_table" "public-subnet" {
                             gateway_id = "${aws_internet_gateway.environment.id}"
                         }*/
   tags = {
-    Name        = "${var.environment}-public-subnet-route-table"
+    Name        = "${var.project}-${var.environment}-public-subnet-route-table"
     Environment = "${lower(var.environment)}"
   }
 }
@@ -96,7 +96,7 @@ resource "aws_route_table" "private-subnet" {
   vpc_id = "${aws_vpc.environment.id}"
 
   tags = {
-    Name        = "${var.environment}-private-subnet-route-table"
+    Name        = "${var.project}-${var.environment}-private-subnet-route-table"
     Environment = "${lower(var.environment)}"
   }
 }
@@ -131,7 +131,7 @@ resource "aws_nat_gateway" "environment" {
   subnet_id     = "${aws_subnet.public-subnets.0.id}"
 
   tags = {
-    Name        = "${var.environment}-nat-gateway"
+    Name        = "${var.project}-${var.environment}-nat-gateway"
     Environment = "${lower(var.environment)}"
   }
   depends_on = ["aws_eip.nat"]

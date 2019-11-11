@@ -1,4 +1,6 @@
 /*=== VARIABLES ===*/
+variable "project" {}
+
 variable "environment" {}
 
 variable "region" {}

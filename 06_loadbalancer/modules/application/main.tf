@@ -9,6 +9,7 @@
 data "aws_vpcs" "environment" {
   tags = {
     Environment = "${lower(var.environment)}"
+    Name        = "${var.project}-${var.environment}-vpc"
   }
 }
 

@@ -1,6 +1,6 @@
+project     = "loadbalancer"
 environment = "dev"
-
-region = "eu-central-1"
+region      = "eu-central-1"
 
 azs = {
   "eu-central-1" = "eu-central-1a,eu-central-1b"

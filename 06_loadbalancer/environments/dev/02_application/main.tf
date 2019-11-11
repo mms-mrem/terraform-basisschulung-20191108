@@ -1,5 +1,6 @@
 module "application" {
   source                   = "./../../../modules/application"
+  project                  = "${var.project}"
   environment              = "${var.environment}"
   region                   = "${var.region}"
   images                   = "${var.image}"
